@@ -11,6 +11,9 @@ AABCharacter::AABCharacter()
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SPRINGARM"));
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
 
+	SpringArm->SetupAttachment(GetCapsuleComponent());
+	Camera->SetupAttachment(SpringArm);
+
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f,0.0f,-88.0f),FRotator(0.0f,-90.0f,0.0f));
 	SpringArm->TargetArmLength = 400.0f;
 	SpringArm->SetRelativeRotation(FRotator(-15.0f,0.0f,0.0f));
