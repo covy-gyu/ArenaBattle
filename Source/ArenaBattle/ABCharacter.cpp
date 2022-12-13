@@ -26,7 +26,7 @@ AABCharacter::AABCharacter()
 
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 
-	static ConstructorHelpers::FClassFinder<UAnimInstance> WARRIOR_ANIM(TEXT("'/Game/Book/Animaitons/WarriorAnimBlueprint.WarriorAnimBlueprint'"));
+	static ConstructorHelpers::FClassFinder<UAnimInstance> WARRIOR_ANIM(TEXT("'/Game/Book/Animaitons/WarriorAnimBlueprint.WarriorAnimBlueprint_C'"));
 	if (WARRIOR_ANIM.Succeeded())
 	{
 		GetMesh()->SetAnimInstanceClass(WARRIOR_ANIM.Class);
@@ -54,6 +54,8 @@ void AABCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 	PlayerInputComponent->BindAxis(TEXT("UpDown"), this, &AABCharacter::UpDown);
 	PlayerInputComponent->BindAxis(TEXT("LeftRight"), this, &AABCharacter::LeftRight);
+	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &AABCharacter::LookUp);
+	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &AABCharacter::Turn);
 }
 
 void AABCharacter::UpDown(float NewAxisValue) {
@@ -65,3 +67,12 @@ void AABCharacter::LeftRight(float NewAxisValue)
 	AddMovementInput(GetActorRightVector(), NewAxisValue);
 }
 
+void AABCharacter::LookUp(float NewAxisValue)
+{
+	AddControllerPitchInput(NewAxisValue);
+}
+
+void AABCharacter::Turn(float NewAxisValue)
+{
+	AddControllerYawInput(NewAxisValue);
+}
